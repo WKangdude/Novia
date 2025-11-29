@@ -1,6 +1,9 @@
+/* TU FUENTE PERSONALIZADA */
 @font-face {
-    font-family: 'MiFuenteElegante'; /* El nombre que tú inventes para llamarla */
-    src: url('Lora.ttf') format('opentype'); /* La ruta al archivo */
+    font-family: 'MiFuenteElegante'; 
+    /* Si tienes el archivo local, úsalo. Si no, el navegador usará la Lora de Google Fonts importada arriba */
+    src: url('Lora.ttf') format('truetype'),
+            local('Lora Regular'), local('Lora'); 
     font-weight: normal;
     font-style: normal;
 }
@@ -90,11 +93,9 @@ body::before {
     transform-origin: bottom center;
     border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
     background: radial-gradient(circle at 30% 30%, rgba(255, 182, 193, 0.95), rgba(219, 112, 147, 0.6));
-    /* CAMBIO: Reducido drásticamente el box-shadow para quitar el brillo excesivo */
     box-shadow: 0 0 5px rgba(255, 105, 180, 0.3);
     opacity: 0;
     transition: all 2s cubic-bezier(0.4, 0, 0.2, 1);
-    /* Removido mix-blend-mode para colores más sólidos/naturales */
 }
 
 /* CAPA 3: Contenido */
@@ -119,15 +120,22 @@ body::before {
 }
 
 #content h1 {
-    /* CAMBIO: Fuente elegante pero no cursiva */
-    font-family: 'MiFuenteElegante', serif;
-    font-size: 3.5rem; /* Ajustado el tamaño para esta fuente */
+    /* CAMBIO: Usamos tu fuente */
+    font-family: 'MiFuenteElegante', 'Lora', serif;
+    
+    /* CAMBIO: Tamaño responsivo fluido usando clamp()
+        Mínimo: 2rem (celular)
+        Ideal: 6vw (pantallas medianas)
+        Máximo: 4rem (escritorio grande) */
+    font-size: clamp(2rem, 6vw, 4rem);
+    
     font-weight: 700;
     text-shadow: 0 4px 10px rgba(0,0,0,0.6);
     margin-bottom: 0.5rem;
     line-height: 1.2;
     color: #fff;
     letter-spacing: 1px;
+    padding: 0 10px; /* Margen de seguridad lateral */
 }
 
 .btn-container {
@@ -140,16 +148,20 @@ body::before {
 }
 
 #content button {
-    padding: 15px 40px;
-    font-size: 1.2rem;
+    /* CAMBIO: Botones responsive */
+    padding: clamp(10px, 2vw, 15px) clamp(25px, 4vw, 40px);
+    font-size: clamp(1rem, 1.5vw, 1.3rem);
+    
     border: none;
-    border-radius: 5px; /* Bordes un poco menos redondos para un look más serio/elegante */
+    border-radius: 5px; 
     cursor: pointer;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    font-family: 'MiFuenteElegante', serif;
+    
+    /* CAMBIO: Usamos tu fuente */
+    font-family: 'MiFuenteElegante', 'Lora', serif;
     font-weight: 600;
-    letter-spacing: 2px; /* Espaciado elegante */
-    text-transform: uppercase; /* Mayúsculas elegantes */
+    letter-spacing: 2px; 
+    text-transform: uppercase; 
     position: relative;
     overflow: hidden;
     box-shadow: 0 4px 15px rgba(0,0,0,0.3);
@@ -159,7 +171,7 @@ body::before {
     background: linear-gradient(45deg, #ff1493, #ff69b4);
     color: white;
     z-index: 20;
-    border-radius: 50px; /* Mantenemos redondo el botón principal */
+    border-radius: 50px; 
 }
 
 #yesBtn::after {
@@ -182,10 +194,9 @@ body::before {
     transform: scale(1.1);
 }
 
-/* CAMBIO: Botón NO mucho más visible */
 #noBtn {
-    background: rgba(255, 255, 255, 0.25); /* Fondo más visible */
-    border: 2px solid rgba(255, 255, 255, 0.6); /* Borde más grueso */
+    background: rgba(255, 255, 255, 0.25); 
+    border: 2px solid rgba(255, 255, 255, 0.6); 
     color: #fff;
     backdrop-filter: blur(4px);
     border-radius: 50px;
@@ -204,9 +215,10 @@ body::before {
 
 #success-message {
     display: none;
-    /* CAMBIO: Fuente elegante en el mensaje final también */
-    font-family: 'MiFuenteElegante', serif;
-    font-size: 3rem;
+    /* CAMBIO: Usamos tu fuente y tamaño responsive */
+    font-family: 'MiFuenteElegante', 'Lora', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    
     color: #fff;
     text-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
     z-index: 40;
@@ -216,7 +228,7 @@ body::before {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 100%;
+    width: 90%; /* Ancho seguro */
 }
 
 @keyframes popIn {
@@ -232,8 +244,9 @@ body::before {
     z-index: 2;
 }
 
+/* Ajustes específicos extra para móviles muy estrechos */
 @media (max-width: 600px) {
-    #content h1 { font-size: 2.5rem; }
-    #content { padding: 1rem; width: 95%; margin-bottom: 50px; }
+    #content { padding: 0.5rem; margin-bottom: 80px; }
+    .btn-container { gap: 15px; }
     #flower-container { top: 55%; }
 }
