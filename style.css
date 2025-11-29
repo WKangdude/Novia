@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'MiFuenteElegante'; /* El nombre que tú inventes para llamarla */
-    src: url('/Lora.ttf') format('opentype'); /* La ruta al archivo */
+    src: url('Lora.ttf') format('opentype'); /* La ruta al archivo */
     font-weight: normal;
     font-style: normal;
 }
@@ -146,7 +146,6 @@ body::before {
     border-radius: 5px; /* Bordes un poco menos redondos para un look más serio/elegante */
     cursor: pointer;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    /* font-family: 'Montserrat', sans-serif; */
     font-family: 'MiFuenteElegante', serif;
     font-weight: 600;
     letter-spacing: 2px; /* Espaciado elegante */

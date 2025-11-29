@@ -52,33 +52,63 @@ const flowerContainer = document.getElementById('flower-container');
 const flowerCenter = document.getElementById('flower-center');
 
 function createPeony() {
-    const numberOfPetals = 70; 
+    // Limpiamos contenido previo por seguridad
+    flowerCenter.innerHTML = '';
+
+    const numberOfPetals = 65; 
+    // Detectar si es móvil (ancho menor a 768px)
+    const isMobile = window.innerWidth < 768;
     
+    // Factor de escala global: Reduce la flor al 55% en móviles, 85% en escritorio
+    const globalScale = isMobile ? 0.55 : 0.85;
+
     for (let i = 0; i < numberOfPetals; i++) {
         const petal = document.createElement('div');
         petal.classList.add('petal');
         
+        // Ángulo áureo para distribución perfecta
         const angle = (i * 137.5) * (Math.PI / 180);
-        const scale = 0.2 + (i * 0.04); 
         
+        // --- Ajuste de Simetría ---
+        // En lugar de una escala exponencial agresiva, usamos una más suave
+        // Antes: 0.2 + (i * 0.04) -> Crecía demasiado rápido
+        const growthRate = isMobile ? 0.015 : 0.02; 
+        const scale = 0.2 + (i * growthRate); 
+
         const hue = 330 + Math.random() * 15; 
-        const lightness = 45 + (i * 0.7); 
+        const lightness = 45 + (i * 0.5); 
         
-        petal.style.width = `${60 + Math.random() * 40}px`; 
-        petal.style.height = `${90 + Math.random() * 40}px`;
+        // --- Ajuste de Forma Circular ---
+        // Reducimos la aleatoriedad drásticamente.
+        // El tamaño base crece con 'i' para que los pétalos externos sean siempre más grandes
+        const baseWidth = 60 + (i * 0.5); 
+        const baseHeight = 90 + (i * 0.8);
+        
+        // Variación aleatoria pequeña (+/- 5px) para que no se vea "artificial" pero sí simétrica
+        const randomVarW = (Math.random() * 10) - 5; 
+        const randomVarH = (Math.random() * 10) - 5;
+        
+        // Aplicamos el tamaño ajustado por el factor global (móvil/escritorio)
+        petal.style.width = `${(baseWidth + randomVarW) * globalScale}px`; 
+        petal.style.height = `${(baseHeight + randomVarH) * globalScale}px`;
         
         petal.style.background = `radial-gradient(circle at 30% 30%, hsla(${hue}, 85%, ${lightness}%, 0.9), hsla(${hue}, 95%, 20%, 0.2))`;
         
+        // Estado inicial
         petal.style.transform = `translate(-50%, -50%) rotate(${angle}rad) scale(0)`;
         petal.style.zIndex = i;
 
         flowerCenter.appendChild(petal);
 
         setTimeout(() => {
-            const distance = i * 1.8; 
+            // Ajuste de dispersión (distance)
+            // En móviles juntamos un poco más los pétalos (1.5) que en escritorio (2.0)
+            const spreadFactor = isMobile ? 1.5 : 2.0;
+            const distance = (i * spreadFactor) * globalScale;
+            
             petal.style.transform = `translate(calc(-50% + ${Math.cos(angle)*distance}px), calc(-50% + ${Math.sin(angle)*distance}px)) rotate(${angle * 57.29}deg) scale(${scale})`;
             petal.style.opacity = 1;
-        }, 1500 + (i * 50));
+        }, 1500 + (i * 40));
     }
 }
 
