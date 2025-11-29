@@ -1,0 +1,240 @@
+@font-face {
+    font-family: 'MiFuenteElegante'; /* El nombre que tú inventes para llamarla */
+    src: url('/Lora.ttf') format('opentype'); /* La ruta al archivo */
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    background: radial-gradient(circle at center, #2a101d 0%, #090205 100%);
+    color: #fff;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Montserrat', sans-serif;
+    position: relative;
+}
+
+/* TEXTURA */
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.4;
+    pointer-events: none;
+    z-index: 5;
+}
+
+/* CAPA 1: Estrellas */
+#stars-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.8;
+    animation: twinkle var(--duration) ease-in-out infinite;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.3; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* CAPA 2: La Flor */
+#flower-container {
+    position: absolute;
+    top: 60%; 
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 1; 
+    opacity: 0;
+    transition: opacity 3s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flower-breathing {
+    animation: breathe 6s ease-in-out infinite;
+}
+
+@keyframes breathe {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.petal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform-origin: bottom center;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 182, 193, 0.95), rgba(219, 112, 147, 0.6));
+    /* CAMBIO: Reducido drásticamente el box-shadow para quitar el brillo excesivo */
+    box-shadow: 0 0 5px rgba(255, 105, 180, 0.3);
+    opacity: 0;
+    transition: all 2s cubic-bezier(0.4, 0, 0.2, 1);
+    /* Removido mix-blend-mode para colores más sólidos/naturales */
+}
+
+/* CAPA 3: Contenido */
+#content {
+    z-index: 20;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 2s ease, transform 2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5rem;
+    width: 90%;
+    max-width: 700px;
+    position: relative;
+    margin-bottom: 100px; 
+    
+    background: radial-gradient(circle, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 70%);
+    padding: 2rem;
+    border-radius: 50%;
+}
+
+#content h1 {
+    /* CAMBIO: Fuente elegante pero no cursiva */
+    font-family: 'MiFuenteElegante', serif;
+    font-size: 3.5rem; /* Ajustado el tamaño para esta fuente */
+    font-weight: 700;
+    text-shadow: 0 4px 10px rgba(0,0,0,0.6);
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+    color: #fff;
+    letter-spacing: 1px;
+}
+
+.btn-container {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    flex-wrap: wrap;
+}
+
+#content button {
+    padding: 15px 40px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 5px; /* Bordes un poco menos redondos para un look más serio/elegante */
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    /* font-family: 'Montserrat', sans-serif; */
+    font-family: 'MiFuenteElegante', serif;
+    font-weight: 600;
+    letter-spacing: 2px; /* Espaciado elegante */
+    text-transform: uppercase; /* Mayúsculas elegantes */
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+#yesBtn {
+    background: linear-gradient(45deg, #ff1493, #ff69b4);
+    color: white;
+    z-index: 20;
+    border-radius: 50px; /* Mantenemos redondo el botón principal */
+}
+
+#yesBtn::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(rgba(255,255,255,0.4), transparent);
+    transform: rotate(45deg) translateY(-100%);
+    transition: transform 0.5s;
+}
+
+#yesBtn:hover::after {
+    transform: rotate(45deg) translateY(0);
+}
+
+#yesBtn:hover {
+    transform: scale(1.1);
+}
+
+/* CAMBIO: Botón NO mucho más visible */
+#noBtn {
+    background: rgba(255, 255, 255, 0.25); /* Fondo más visible */
+    border: 2px solid rgba(255, 255, 255, 0.6); /* Borde más grueso */
+    color: #fff;
+    backdrop-filter: blur(4px);
+    border-radius: 50px;
+}
+
+#noBtn:hover {
+    background: rgba(255, 255, 255, 0.4);
+    color: #fff;
+    border-color: #fff;
+}
+
+.visible {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+#success-message {
+    display: none;
+    /* CAMBIO: Fuente elegante en el mensaje final también */
+    font-family: 'MiFuenteElegante', serif;
+    font-size: 3rem;
+    color: #fff;
+    text-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
+    z-index: 40;
+    text-align: center;
+    animation: popIn 1.5s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+}
+
+@keyframes popIn {
+    0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; filter: blur(10px); }
+    100% { transform: translate(-50%, -50%) scale(1); opacity: 1; filter: blur(0); }
+}
+
+.firefly {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,220,1) 0%, rgba(255,255,255,0) 70%);
+    pointer-events: none;
+    z-index: 2;
+}
+
+@media (max-width: 600px) {
+    #content h1 { font-size: 2.5rem; }
+    #content { padding: 1rem; width: 95%; margin-bottom: 50px; }
+    #flower-container { top: 55%; }
+}
